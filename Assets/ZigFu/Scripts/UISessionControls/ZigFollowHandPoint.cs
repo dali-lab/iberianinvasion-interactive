@@ -8,6 +8,7 @@ public class ZigFollowHandPoint : MonoBehaviour
 	public Vector3 bias;
 	public float damping = 5;
     public Vector3 bounds = new Vector3(10, 10, 10);
+	public Vector3 circlePos = new Vector3(0.01f, 1.35f, 2.89f);
 
     Vector3 focusPoint;
 	Vector3 desiredPos;
@@ -19,6 +20,11 @@ public class ZigFollowHandPoint : MonoBehaviour
 	void Update() {
 		transform.localPosition = Vector3.Lerp(transform.localPosition,  desiredPos, damping * Time.deltaTime);
 		Debug.DrawLine (desiredPos, transform.localPosition, Color.red);
+
+		if (transform.localPosition == circlePos) {
+			Debug.Log("Hand positioned at circle");
+		}
+
 	}
 
 	void Session_Start(Vector3 focusPoint) {

@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{20B7A78D-09E4-C3E1-4A4D-20DCFEA14962}</ProjectGuid>
+	<ProjectGuid>{18460F6E-21BC-99B8-91CD-949D5E7D35F9}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -54,10 +54,10 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="OpenNI.Net">
- <HintPath>/Users/yondonfu/surreal_open_palm_detector/Assets/ZigFu/Scripts/_Internal/OpenNI.Net.dll</HintPath>
+ <HintPath>/Users/yondonfu/dali/iberianinvasion-interactive/Assets/ZigFu/Scripts/_Internal/OpenNI.Net.dll</HintPath>
  </Reference>
  <Reference Include="ZDK">
- <HintPath>/Users/yondonfu/surreal_open_palm_detector/Assets/ZigFu/Scripts/_Internal/ZDK.dll</HintPath>
+ <HintPath>/Users/yondonfu/dali/iberianinvasion-interactive/Assets/ZigFu/Scripts/_Internal/ZDK.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
