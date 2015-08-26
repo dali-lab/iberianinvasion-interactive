@@ -38,8 +38,8 @@ namespace KinectHandTracking
 
             Ellipse ellipse = new Ellipse
             {
-                Width = 80,
-                Height = 80,
+                Width = 50,
+                Height = 50,
                 Stroke = new SolidColorBrush(Colors.LightBlue),
                 StrokeThickness = 4
             };
@@ -303,368 +303,99 @@ namespace KinectHandTracking
             Canvas.SetLeft(head2, endBody2.X - head2.Width / 2);
             Canvas.SetTop(head2, endBody2.Y - head2.Height / 2);
 
-            canvas.Children.Add(body0);
-            canvas.Children.Add(head0);
-            canvas.Children.Add(body1);
-            canvas.Children.Add(head1);
-            canvas.Children.Add(body2);
-            canvas.Children.Add(head2);
-            
-        }
+            Point startBody3 = GetPointBetweenPoints(endBody2, toPoint, 20);
+            Point endBody3 = GetPointBetweenPoints(startBody3, toPoint, 10);
 
-        /*
-        public static void DrawAnt(this Canvas canvas, Joint joint, CoordinateMapper mapper)
-        {
-            if (joint.TrackingState == JointTrackingState.NotTracked) return;
+            Line body3 = new Line()
+            {
+                X1 = startBody3.X,
+                Y1 = startBody3.Y,
+                X2 = endBody3.X,
+                Y2 = endBody3.Y,
+                Stroke = new SolidColorBrush(Colors.Black),
+                StrokeThickness = 2
+            };
 
-            Point point = new Point();
+            canvas.DrawAntLegs(startBody3);
+            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody3, endBody3));
 
-            ColorImagePoint colorPoint = mapper.MapSkeletonPointToColorPoint(joint.Position, ColorImageFormat.RgbResolution640x480Fps30);
-            point.X = colorPoint.X;
-            point.Y = colorPoint.Y;
-
-            Ellipse ellipse = new Ellipse
+            Ellipse head3 = new Ellipse()
             {
                 Width = 10,
                 Height = 10,
                 Fill = new SolidColorBrush(Colors.Black)
             };
 
-            Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
-            Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
+            Canvas.SetLeft(head3, endBody3.X - head3.Width / 2);
+            Canvas.SetTop(head3, endBody3.Y - head3.Height / 2);
 
-            Line body = new Line()
+            Point startBody4 = GetPointBetweenPoints(endBody3, toPoint, 20);
+            Point endBody4 = GetPointBetweenPoints(startBody4, toPoint, 10);
+
+            Line body4 = new Line()
             {
-                X1 = point.X,
-                Y1 = point.Y,
-                X2 = point.X,
-                Y2 = point.Y + 20,
+                X1 = startBody4.X,
+                Y1 = startBody4.Y,
+                X2 = endBody4.X,
+                Y2 = endBody4.Y,
                 Stroke = new SolidColorBrush(Colors.Black),
                 StrokeThickness = 2
             };
+
+            canvas.DrawAntLegs(startBody4);
+            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody4, endBody4));
+
+            Ellipse head4 = new Ellipse()
+            {
+                Width = 10,
+                Height = 10,
+                Fill = new SolidColorBrush(Colors.Black)
+            };
+
+            Canvas.SetLeft(head4, endBody4.X - head4.Width / 2);
+            Canvas.SetTop(head4, endBody4.Y - head4.Height / 2);
+
+            Point startBody5 = GetPointBetweenPoints(endBody4, toPoint, 20);
+            Point endBody5 = GetPointBetweenPoints(startBody5, toPoint, 10);
+
+            Line body5 = new Line()
+            {
+                X1 = startBody5.X,
+                Y1 = startBody5.Y,
+                X2 = endBody5.X,
+                Y2 = endBody5.Y,
+                Stroke = new SolidColorBrush(Colors.Black),
+                StrokeThickness = 2
+            };
+
+            canvas.DrawAntLegs(startBody5);
+            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody5, endBody5));
+
+            Ellipse head5 = new Ellipse()
+            {
+                Width = 10,
+                Height = 10,
+                Fill = new SolidColorBrush(Colors.Black)
+            };
+
+            Canvas.SetLeft(head5, endBody5.X - head5.Width / 2);
+            Canvas.SetTop(head5, endBody5.Y - head5.Height / 2);
+
+            canvas.Children.Add(body0);
+            canvas.Children.Add(head0);
+            canvas.Children.Add(body1);
+            canvas.Children.Add(head1);
+            canvas.Children.Add(body2);
+            canvas.Children.Add(head2);
+            canvas.Children.Add(body3);
+            canvas.Children.Add(head3);
+            canvas.Children.Add(body4);
+            canvas.Children.Add(head4);
+            canvas.Children.Add(body5);
+            canvas.Children.Add(head5);
             
-            Line leftArmBottom = new Line()
-            {
-                X1 = point.X,
-                Y1 = point.Y + 10,
-                X2 = point.X - 10,
-                Y2 = point.Y - 5,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            Line leftArmTop = new Line()
-            {
-                X1 = point.X - 10,
-                Y1 = point.Y - 5,
-                X2 = point.X + 10,
-                Y2 = point.Y - 10,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            Line rightArmBottom = new Line()
-            {
-                X1 = point.X,
-                Y1 = point.Y + 10,
-                X2 = point.X + 10,
-                Y2 = point.Y - 5,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            Line rightArmTop = new Line()
-            {
-                X1 = point.X + 10,
-                Y1 = point.Y - 5,
-                X2 = point.X - 10,
-                Y2 = point.Y - 10,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            Line leftLegTop = new Line()
-            {
-                X1 = point.X,
-                Y1 = point.Y + 20,
-                X2 = point.X - 10,
-                Y2 = point.Y + 25,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            Line leftLegBottom = new Line()
-            {
-                X1 = point.X - 10,
-                Y1 = point.Y + 25,
-                X2 = point.X + 10,
-                Y2 = point.Y + 30,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            Line rightLegTop = new Line()
-            {
-                X1 = point.X,
-                Y1 = point.Y + 20,
-                X2 = point.X + 10,
-                Y2 = point.Y + 25,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            Line rightLegBottom = new Line()
-            {
-                X1 = point.X + 10,
-                Y1 = point.Y + 25,
-                X2 = point.X - 10,
-                Y2 = point.Y + 30,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
-
-            canvas.Children.Add(ellipse);
-            canvas.Children.Add(body);
-            canvas.Children.Add(leftArmBottom);
-            canvas.Children.Add(leftArmTop);
-            canvas.Children.Add(rightArmBottom);
-            canvas.Children.Add(rightArmTop);
-            canvas.Children.Add(leftLegTop);
-            canvas.Children.Add(leftLegBottom);
-            canvas.Children.Add(rightLegTop);
-            canvas.Children.Add(rightLegBottom);
-             
-
-            canvas.Children.Add(ellipse);
-            canvas.Children.Add(body);
-        }
-        */
-
-        #region Camera
-
-        /*
-        public static ImageSource ToBitmap(this ColorImageFrame frame)
-        {
-            int width = frame.FrameDescription.Width;
-            int height = frame.FrameDescription.Height;
-            PixelFormat format = PixelFormats.Bgr32;
-
-            byte[] pixels = new byte[width * height * ((format.BitsPerPixel + 7) / 8)];
-
-            if (frame.RawColorImageFormat == ColorImageFormat.Bgra)
-            {
-                frame.CopyRawFrameDataToArray(pixels);
-            }
-            else
-            {
-                frame.CopyConvertedFrameDataToArray(pixels, ColorImageFormat.Bgra);
-            }
-
-            int stride = width * format.BitsPerPixel / 8;
-
-            return BitmapSource.Create(width, height, 96, 96, format, null, pixels, stride);
         }
 
-        public static ImageSource ToBitmap(this DepthImageFrame frame)
-        {
-            int width = frame.FrameDescription.Width;
-            int height = frame.FrameDescription.Height;
-            PixelFormat format = PixelFormats.Bgr32;
-
-            ushort minDepth = frame.DepthMinReliableDistance;
-            ushort maxDepth = frame.DepthMaxReliableDistance;
-
-            ushort[] pixelData = new ushort[width * height];
-            byte[] pixels = new byte[width * height * (format.BitsPerPixel + 7) / 8];
-
-            frame.CopyFrameDataToArray(pixelData);
-
-            int colorIndex = 0;
-            for (int depthIndex = 0; depthIndex < pixelData.Length; ++depthIndex)
-            {
-                ushort depth = pixelData[depthIndex];
-
-                byte intensity = (byte)(depth >= minDepth && depth <= maxDepth ? depth : 0);
-
-                pixels[colorIndex++] = intensity; // Blue
-                pixels[colorIndex++] = intensity; // Green
-                pixels[colorIndex++] = intensity; // Red
-
-                ++colorIndex;
-            }
-
-            int stride = width * format.BitsPerPixel / 8;
-
-            return BitmapSource.Create(width, height, 96, 96, format, null, pixels, stride);
-        }
-
-        public static ImageSource ToBitmap(this InfraredImageFrame frame)
-        {
-            int width = frame.FrameDescription.Width;
-            int height = frame.FrameDescription.Height;
-            PixelFormat format = PixelFormats.Bgr32;
-
-            ushort[] frameData = new ushort[width * height];
-            byte[] pixels = new byte[width * height * (format.BitsPerPixel + 7) / 8];
-
-            frame.CopyFrameDataToArray(frameData);
-
-            int colorIndex = 0;
-            for (int infraredIndex = 0; infraredIndex < frameData.Length; infraredIndex++)
-            {
-                ushort ir = frameData[infraredIndex];
-
-                byte intensity = (byte)(ir >> 7);
-
-                pixels[colorIndex++] = (byte)(intensity / 1); // Blue
-                pixels[colorIndex++] = (byte)(intensity / 1); // Green   
-                pixels[colorIndex++] = (byte)(intensity / 0.4); // Red
-
-                colorIndex++;
-            }
-
-            int stride = width * format.BitsPerPixel / 8;
-
-            return BitmapSource.Create(width, height, 96, 96, format, null, pixels, stride);
-        }
-        */
-        #endregion
-
-        /*
-
-        #region Body
-
-        public static Point Scale(this Joint joint, CoordinateMapper mapper)
-        {
-            Point point = new Point();
-
-            ColorSpacePoint colorPoint = mapper.MapCameraPointToColorSpace(joint.Position);
-            point.X *= float.IsInfinity(colorPoint.X) ? 0.0 : colorPoint.X;
-            point.Y *= float.IsInfinity(colorPoint.Y) ? 0.0 : colorPoint.Y;
-
-            return point;
-        }
-
-        #endregion
-
-        #region Drawing
-
-        public static void DrawSkeleton(this Canvas canvas, Body body, CoordinateMapper mapper)
-        {
-            if (body == null) return;
-
-            foreach (Joint joint in body.Joints.Values)
-            {
-                canvas.DrawPoint(joint, mapper);
-            }
-
-            canvas.DrawLine(body.Joints[JointType.Head], body.Joints[JointType.Neck], mapper);
-            canvas.DrawLine(body.Joints[JointType.Neck], body.Joints[JointType.SpineShoulder], mapper);
-            canvas.DrawLine(body.Joints[JointType.SpineShoulder], body.Joints[JointType.ShoulderLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.SpineShoulder], body.Joints[JointType.ShoulderRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.SpineShoulder], body.Joints[JointType.SpineMid], mapper);
-            canvas.DrawLine(body.Joints[JointType.ShoulderLeft], body.Joints[JointType.ElbowLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.ShoulderRight], body.Joints[JointType.ElbowRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.ElbowLeft], body.Joints[JointType.WristLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.ElbowRight], body.Joints[JointType.WristRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.WristLeft], body.Joints[JointType.HandLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.WristRight], body.Joints[JointType.HandRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.HandLeft], body.Joints[JointType.HandTipLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.HandRight], body.Joints[JointType.HandTipRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.HandTipLeft], body.Joints[JointType.ThumbLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.HandTipRight], body.Joints[JointType.ThumbRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.SpineMid], body.Joints[JointType.SpineBase], mapper);
-            canvas.DrawLine(body.Joints[JointType.SpineBase], body.Joints[JointType.HipLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.SpineBase], body.Joints[JointType.HipRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.HipLeft], body.Joints[JointType.KneeLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.HipRight], body.Joints[JointType.KneeRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.KneeLeft], body.Joints[JointType.AnkleLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.KneeRight], body.Joints[JointType.AnkleRight], mapper);
-            canvas.DrawLine(body.Joints[JointType.AnkleLeft], body.Joints[JointType.FootLeft], mapper);
-            canvas.DrawLine(body.Joints[JointType.AnkleRight], body.Joints[JointType.FootRight], mapper);
-        }
-
-        public static void DrawPoint(this Canvas canvas, Joint joint, CoordinateMapper mapper)
-        {
-            if (joint.TrackingState == TrackingState.NotTracked) return;
-
-            Point point = joint.Scale(mapper);
-
-            Ellipse ellipse = new Ellipse
-            {
-                Width = 20,
-                Height = 20,
-                Fill = new SolidColorBrush(Colors.LightBlue)
-            };
-
-            Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
-            Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
-
-            canvas.Children.Add(ellipse);
-        }
-
-        public static void DrawHand(this Canvas canvas, Joint hand, CoordinateMapper mapper)
-        {
-            if (hand.TrackingState == TrackingState.NotTracked) return;
-
-            Point point = hand.Scale(mapper);
-
-            Ellipse ellipse = new Ellipse
-            {
-                Width = 100,
-                Height = 100,
-                Stroke = new SolidColorBrush(Colors.LightBlue),
-                StrokeThickness = 4
-            };
-
-            Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
-            Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
-
-            canvas.Children.Add(ellipse);
-        }
-
-        public static void DrawThumb(this Canvas canvas, Joint thumb, CoordinateMapper mapper)
-        {
-            if (thumb.TrackingState == TrackingState.NotTracked) return;
-
-            Point point = thumb.Scale(mapper);
-
-            Ellipse ellipse = new Ellipse
-            {
-                Width = 40,
-                Height = 40,
-                Fill = new SolidColorBrush(Colors.LightBlue),
-                Opacity = 0.7
-            };
-
-            Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
-            Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
-
-            canvas.Children.Add(ellipse);
-        }
-
-        public static void DrawLine(this Canvas canvas, Joint first, Joint second, CoordinateMapper mapper)
-        {
-            if (first.TrackingState == TrackingState.NotTracked || second.TrackingState == TrackingState.NotTracked) return;
-
-            Point firstPoint = first.Scale(mapper);
-            Point secondPoint = second.Scale(mapper);
-
-            Line line = new Line
-            {
-                X1 = firstPoint.X,
-                Y1 = firstPoint.Y,
-                X2 = secondPoint.X,
-                Y2 = secondPoint.Y,
-                StrokeThickness = 8,
-                Stroke = new SolidColorBrush(Colors.LightBlue)
-            };
-
-            canvas.Children.Add(line);
-        }
-        */
-
-       // #endregion
 
         
     }
