@@ -32,7 +32,7 @@ namespace KinectHandTracking
 
             Point point = new Point();
 
-            ColorImagePoint colorPoint = mapper.MapSkeletonPointToColorPoint(hand.Position, ColorImageFormat.RgbResolution640x480Fps30);
+            ColorImagePoint colorPoint = mapper.MapSkeletonPointToColorPoint(hand.Position, ColorImageFormat.RgbResolution1280x960Fps12);
             point.X = colorPoint.X;
             point.Y = colorPoint.Y;
 
@@ -218,11 +218,11 @@ namespace KinectHandTracking
             Point fromPoint = new Point();
             Point toPoint = new Point();
 
-            ColorImagePoint colorPointFrom = mapper.MapSkeletonPointToColorPoint(jointFrom.Position, ColorImageFormat.RgbResolution640x480Fps30);
+            ColorImagePoint colorPointFrom = mapper.MapSkeletonPointToColorPoint(jointFrom.Position, ColorImageFormat.RgbResolution1280x960Fps12);
             fromPoint.X = colorPointFrom.X;
             fromPoint.Y = colorPointFrom.Y;
 
-            ColorImagePoint colorPointTo = mapper.MapSkeletonPointToColorPoint(jointTo.Position, ColorImageFormat.RgbResolution640x480Fps30);
+            ColorImagePoint colorPointTo = mapper.MapSkeletonPointToColorPoint(jointTo.Position, ColorImageFormat.RgbResolution1280x960Fps12);
             toPoint.X = colorPointTo.X;
             toPoint.Y = colorPointTo.Y;
 

@@ -49,7 +49,7 @@ namespace KinectHandTracking
             _sensor = KinectSensor.KinectSensors.FirstOrDefault(s => s.Status == KinectStatus.Connected);
 
             // Turn on the color stream to receive color frames
-            _sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+            _sensor.ColorStream.Enable(ColorImageFormat.RgbResolution1280x960Fps12);
 
             // Allocate space to put the pixels we'll receive
             _colorPixels = new byte[_sensor.ColorStream.FramePixelDataLength];
