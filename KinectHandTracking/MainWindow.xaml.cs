@@ -122,7 +122,43 @@ namespace KinectHandTracking
         public void TrackSkeletons()
         {
             canvas.Children.Clear();
+            if (_sensor != null && _sensor.SkeletonStream != null)
+            {
+                if (!_sensor.SkeletonStream.AppChoosesSkeletons)
+                {
+                    _sensor.SkeletonStream.AppChoosesSkeletons = true;
+                }
 
+                float closestDistance = 10000f;
+                int closestID = 0;
+
+                foreach (Skeleton skeleton in _skeletonData.Where(s => s.TrackingState != SkeletonTrackingState.NotTracked))
+                {
+                    if (skeleton.Position.Z < closestDistance) 
+                    {
+                        closestID = skeleton.TrackingId;
+                        closestDistance = skeleton.Position.Z;
+                    }
+                }
+
+                if (closestID > 0)
+                {
+                    _sensor.SkeletonStream.ChooseSkeletons(closestID);
+                    Skeleton[] result = _skeletonData.Where(s => s.TrackingId == closestID).ToArray();
+
+                    if (result.Length > 0)
+                    {
+                        Skeleton trackedSkeleton = result[0];
+                        Joint rightHand = trackedSkeleton.Joints[JointType.HandRight];
+                        Joint rightShoulder = trackedSkeleton.Joints[JointType.ShoulderRight];
+
+                        canvas.DrawTrackedHands(rightHand, _sensor.CoordinateMapper);
+                        canvas.DrawAntsAlongArms(trackedSkeleton, _sensor.CoordinateMapper);
+                    }
+                }
+            }
+
+            /*
             foreach (Skeleton skeleton in _skeletonData)
             {
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
@@ -142,6 +178,7 @@ namespace KinectHandTracking
                     
                 }
             }
+            */
         }
 
 
