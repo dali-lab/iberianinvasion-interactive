@@ -228,171 +228,202 @@ namespace KinectHandTracking
 
             Point endBody0 = GetPointBetweenPoints(fromPoint, toPoint, 10);
 
-            Line body0 = new Line()
+            try
             {
-                X1 = fromPoint.X,
-                Y1 = fromPoint.Y,
-                X2 = endBody0.X,
-                Y2 = endBody0.Y,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
+                Line body0 = new Line()
+                {
+                    X1 = fromPoint.X,
+                    Y1 = fromPoint.Y,
+                    X2 = endBody0.X,
+                    Y2 = endBody0.Y,
+                    Stroke = new SolidColorBrush(Colors.Black),
+                    StrokeThickness = 2
+                };
 
-            canvas.DrawAntLegs(fromPoint);
-            canvas.DrawAntArms(GetMidpointBetweenPoints(fromPoint, endBody0));
+                canvas.DrawAntLegs(fromPoint);
+                canvas.DrawAntArms(GetMidpointBetweenPoints(fromPoint, endBody0));
 
-            Ellipse head0 = new Ellipse()
-            {
-                Width = 10,
-                Height = 10,
-                Fill = new SolidColorBrush(Colors.Black)
-            };
+                Ellipse head0 = new Ellipse()
+                {
+                    Width = 10,
+                    Height = 10,
+                    Fill = new SolidColorBrush(Colors.Black)
+                };
 
-            Canvas.SetLeft(head0, endBody0.X - head0.Width / 2);
-            Canvas.SetTop(head0, endBody0.Y - head0.Height / 2);
+                Canvas.SetLeft(head0, endBody0.X - head0.Width / 2);
+                Canvas.SetTop(head0, endBody0.Y - head0.Height / 2);
+
+                canvas.Children.Add(body0);
+                canvas.Children.Add(head0);
+            }
+            catch(System.ArgumentException) { }
 
             Point startBody1 = GetPointBetweenPoints(endBody0, toPoint, 20);
             Point endBody1 = GetPointBetweenPoints(startBody1, toPoint, 10);
 
-            Line body1 = new Line()
+            try
             {
-                X1 = startBody1.X,
-                Y1 = startBody1.Y,
-                X2 = endBody1.X,
-                Y2 = endBody1.Y,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
+                Line body1 = new Line()
+                {
+                    X1 = startBody1.X,
+                    Y1 = startBody1.Y,
+                    X2 = endBody1.X,
+                    Y2 = endBody1.Y,
+                    Stroke = new SolidColorBrush(Colors.Black),
+                    StrokeThickness = 2
+                };
 
-            canvas.DrawAntLegs(startBody1);
-            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody1, endBody1));
+                canvas.DrawAntLegs(startBody1);
+                canvas.DrawAntArms(GetMidpointBetweenPoints(startBody1, endBody1));
 
-            Ellipse head1 = new Ellipse()
-            {
-                Width = 10,
-                Height = 10,
-                Fill = new SolidColorBrush(Colors.Black)
-            };
+                Ellipse head1 = new Ellipse()
+                {
+                    Width = 10,
+                    Height = 10,
+                    Fill = new SolidColorBrush(Colors.Black)
+                };
 
-            Canvas.SetLeft(head1, endBody1.X - head1.Width / 2);
-            Canvas.SetTop(head1, endBody1.Y - head1.Height / 2);
+                Canvas.SetLeft(head1, endBody1.X - head1.Width / 2);
+                Canvas.SetTop(head1, endBody1.Y - head1.Height / 2);
+
+                canvas.Children.Add(body1);
+                canvas.Children.Add(head1);
+            }
+            catch (System.ArgumentException) { }
 
             Point startBody2 = GetPointBetweenPoints(endBody1, toPoint, 20);
             Point endBody2 = GetPointBetweenPoints(startBody2, toPoint, 10);
 
-            Line body2 = new Line()
+            try
             {
-                X1 = startBody2.X,
-                Y1 = startBody2.Y,
-                X2 = endBody2.X,
-                Y2 = endBody2.Y,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
+                Line body2 = new Line()
+                {
+                    X1 = startBody2.X,
+                    Y1 = startBody2.Y,
+                    X2 = endBody2.X,
+                    Y2 = endBody2.Y,
+                    Stroke = new SolidColorBrush(Colors.Black),
+                    StrokeThickness = 2
+                };
 
-            canvas.DrawAntLegs(startBody2);
-            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody2, endBody2));
+                canvas.DrawAntLegs(startBody2);
+                canvas.DrawAntArms(GetMidpointBetweenPoints(startBody2, endBody2));
 
-            Ellipse head2 = new Ellipse()
-            {
-                Width = 10,
-                Height = 10,
-                Fill = new SolidColorBrush(Colors.Black)
-            };
+                Ellipse head2 = new Ellipse()
+                {
+                    Width = 10,
+                    Height = 10,
+                    Fill = new SolidColorBrush(Colors.Black)
+                };
 
-            Canvas.SetLeft(head2, endBody2.X - head2.Width / 2);
-            Canvas.SetTop(head2, endBody2.Y - head2.Height / 2);
+                Canvas.SetLeft(head2, endBody2.X - head2.Width / 2);
+                Canvas.SetTop(head2, endBody2.Y - head2.Height / 2);
+
+                canvas.Children.Add(body2);
+                canvas.Children.Add(head2);
+            }
+            catch (System.ArgumentException) { }
 
             Point startBody3 = GetPointBetweenPoints(endBody2, toPoint, 20);
             Point endBody3 = GetPointBetweenPoints(startBody3, toPoint, 10);
 
-            Line body3 = new Line()
+            try
             {
-                X1 = startBody3.X,
-                Y1 = startBody3.Y,
-                X2 = endBody3.X,
-                Y2 = endBody3.Y,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
+                Line body3 = new Line()
+                {
+                    X1 = startBody3.X,
+                    Y1 = startBody3.Y,
+                    X2 = endBody3.X,
+                    Y2 = endBody3.Y,
+                    Stroke = new SolidColorBrush(Colors.Black),
+                    StrokeThickness = 2
+                };
 
-            canvas.DrawAntLegs(startBody3);
-            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody3, endBody3));
+                canvas.DrawAntLegs(startBody3);
+                canvas.DrawAntArms(GetMidpointBetweenPoints(startBody3, endBody3));
 
-            Ellipse head3 = new Ellipse()
-            {
-                Width = 10,
-                Height = 10,
-                Fill = new SolidColorBrush(Colors.Black)
-            };
+                Ellipse head3 = new Ellipse()
+                {
+                    Width = 10,
+                    Height = 10,
+                    Fill = new SolidColorBrush(Colors.Black)
+                };
 
-            Canvas.SetLeft(head3, endBody3.X - head3.Width / 2);
-            Canvas.SetTop(head3, endBody3.Y - head3.Height / 2);
+                Canvas.SetLeft(head3, endBody3.X - head3.Width / 2);
+                Canvas.SetTop(head3, endBody3.Y - head3.Height / 2);
+
+                canvas.Children.Add(body3);
+                canvas.Children.Add(head3);
+            }
+            catch (System.ArgumentException) { }
+
 
             Point startBody4 = GetPointBetweenPoints(endBody3, toPoint, 20);
             Point endBody4 = GetPointBetweenPoints(startBody4, toPoint, 10);
 
-            Line body4 = new Line()
+            try
             {
-                X1 = startBody4.X,
-                Y1 = startBody4.Y,
-                X2 = endBody4.X,
-                Y2 = endBody4.Y,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
+                Line body4 = new Line()
+                {
+                    X1 = startBody4.X,
+                    Y1 = startBody4.Y,
+                    X2 = endBody4.X,
+                    Y2 = endBody4.Y,
+                    Stroke = new SolidColorBrush(Colors.Black),
+                    StrokeThickness = 2
+                };
 
-            canvas.DrawAntLegs(startBody4);
-            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody4, endBody4));
+                canvas.DrawAntLegs(startBody4);
+                canvas.DrawAntArms(GetMidpointBetweenPoints(startBody4, endBody4));
 
-            Ellipse head4 = new Ellipse()
-            {
-                Width = 10,
-                Height = 10,
-                Fill = new SolidColorBrush(Colors.Black)
-            };
+                Ellipse head4 = new Ellipse()
+                {
+                    Width = 10,
+                    Height = 10,
+                    Fill = new SolidColorBrush(Colors.Black)
+                };
 
-            Canvas.SetLeft(head4, endBody4.X - head4.Width / 2);
-            Canvas.SetTop(head4, endBody4.Y - head4.Height / 2);
+                Canvas.SetLeft(head4, endBody4.X - head4.Width / 2);
+                Canvas.SetTop(head4, endBody4.Y - head4.Height / 2);
+
+                canvas.Children.Add(body4);
+                canvas.Children.Add(head4);
+            }
+            catch (System.ArgumentException) { }
+            
 
             Point startBody5 = GetPointBetweenPoints(endBody4, toPoint, 20);
             Point endBody5 = GetPointBetweenPoints(startBody5, toPoint, 10);
 
-            Line body5 = new Line()
+            try
             {
-                X1 = startBody5.X,
-                Y1 = startBody5.Y,
-                X2 = endBody5.X,
-                Y2 = endBody5.Y,
-                Stroke = new SolidColorBrush(Colors.Black),
-                StrokeThickness = 2
-            };
+                Line body5 = new Line()
+                {
+                    X1 = startBody5.X,
+                    Y1 = startBody5.Y,
+                    X2 = endBody5.X,
+                    Y2 = endBody5.Y,
+                    Stroke = new SolidColorBrush(Colors.Black),
+                    StrokeThickness = 2
+                };
 
-            canvas.DrawAntLegs(startBody5);
-            canvas.DrawAntArms(GetMidpointBetweenPoints(startBody5, endBody5));
+                canvas.DrawAntLegs(startBody5);
+                canvas.DrawAntArms(GetMidpointBetweenPoints(startBody5, endBody5));
 
-            Ellipse head5 = new Ellipse()
-            {
-                Width = 10,
-                Height = 10,
-                Fill = new SolidColorBrush(Colors.Black)
-            };
+                Ellipse head5 = new Ellipse()
+                {
+                    Width = 10,
+                    Height = 10,
+                    Fill = new SolidColorBrush(Colors.Black)
+                };
 
-            Canvas.SetLeft(head5, endBody5.X - head5.Width / 2);
-            Canvas.SetTop(head5, endBody5.Y - head5.Height / 2);
+                Canvas.SetLeft(head5, endBody5.X - head5.Width / 2);
+                Canvas.SetTop(head5, endBody5.Y - head5.Height / 2);
 
-            canvas.Children.Add(body0);
-            canvas.Children.Add(head0);
-            canvas.Children.Add(body1);
-            canvas.Children.Add(head1);
-            canvas.Children.Add(body2);
-            canvas.Children.Add(head2);
-            canvas.Children.Add(body3);
-            canvas.Children.Add(head3);
-            canvas.Children.Add(body4);
-            canvas.Children.Add(head4);
-            canvas.Children.Add(body5);
-            canvas.Children.Add(head5);
+                canvas.Children.Add(body5);
+                canvas.Children.Add(head5);
+            }
+            catch (System.ArgumentException) { }            
             
         }
 
