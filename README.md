@@ -15,8 +15,9 @@ MainWindow.xaml contains the XML mark up for the window displaying the Kinect co
 
 **See comments in the code that provide brief descriptions of how functions work
 
-Useful Resources
-Skeleton tracking: https://msdn.microsoft.com/en-us/library/JJ131025.aspx
+Useful Resources\n
+
+Skeleton tracking: https://msdn.microsoft.com/en-us/library/JJ131025.aspx \n
 Hand tracking (this is for the Kinect v2 Cam, but the explanations of the code are still useful for understanding how hand tracking works in general: http://pterneas.com/2014/03/21/kinect-for-windows-version-2-hand-tracking/
 Coordinate mapping (this is for the Kinect v2 Cam, but the explanation is useful for understanding how coordinate mapping works and why it is important when drawing onto the Kinect color stream playback): http://pterneas.com/2014/05/06/understanding-kinect-coordinate-mapping/
 
