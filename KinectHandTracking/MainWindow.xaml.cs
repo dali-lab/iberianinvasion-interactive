@@ -23,13 +23,10 @@ namespace KinectHandTracking
     {
         #region Members
 
-        KinectSensor _sensor;
-        Skeleton[] _skeletonData;
+        KinectSensor _sensor; // Kinect sensor object
+        Skeleton[] _skeletonData; // Array to hold all skeletons detected by Kinect
         WriteableBitmap _colorBitmap;
         byte[] _colorPixels;
-        DrawingGroup _drawingGroup;
-        // MultiSourceFrameReader _reader;
-        // IList<Body> _bodies;
 
         #endregion
 
@@ -44,6 +41,9 @@ namespace KinectHandTracking
 
         #region Event handlers
 
+        /*
+         * Sets up the window, Kinect color stream (video playback) and Kinect skeleton detection
+        */
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _sensor = KinectSensor.KinectSensors.FirstOrDefault(s => s.Status == KinectStatus.Connected);
@@ -63,28 +63,21 @@ namespace KinectHandTracking
             // Add an event handler to be called whenever there is new color frame data
             _sensor.ColorFrameReady += this.SensorColorFrameReady;
 
+            // Enable skeleton detection
             _sensor.SkeletonStream.Enable();
 
             _skeletonData = new Skeleton[_sensor.SkeletonStream.FrameSkeletonArrayLength];
 
+            // Add event handler to be called whenever a new skeleton frame is ready
             _sensor.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(kinect_SkeletonFrameReady);
-
 
             _sensor.Start();
 
-            /*
-            _sensor = KinectSensor.GetDefault();
-
-            if (_sensor != null)
-            {
-                _sensor.Open();
-                _sensor.Start();
-
-                _reader = _sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Color | FrameSourceTypes.Depth | FrameSourceTypes.Infrared | FrameSourceTypes.Body);
-                _reader.MultiSourceFrameArrived += Reader_MultiSourceFrameArrived;
-            }*/
         }
 
+        /*
+         * Callback function called whenever there is new color frame data
+         */
         private void SensorColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
         {
             using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
@@ -104,38 +97,45 @@ namespace KinectHandTracking
             }
         }
 
+        /*
+         * Callback function called whenever there is a new skeleton frame ready 
+         */
         private void kinect_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame()) // Open the Skeleton frame
             {
-                if (skeletonFrame != null && _skeletonData != null) // check that a frame is available
+                if (skeletonFrame != null && _skeletonData != null) // Check that a frame is available
                 {
-                    skeletonFrame.CopySkeletonDataTo(_skeletonData); // get the skeletal information in this frame
+                    skeletonFrame.CopySkeletonDataTo(_skeletonData); // Get the skeletal information in this frame
                 }
             }
 
-            TrackSkeletons();
+            TrackNearestSkeleton();
         }
 
-        
-
-        public void TrackSkeletons()
+        /*
+         * Track the skeleton nearest to the Kinect sensor
+         */
+        public void TrackNearestSkeleton()
         {
             canvas.Children.Clear();
+
             if (_sensor != null && _sensor.SkeletonStream != null)
             {
                 if (!_sensor.SkeletonStream.AppChoosesSkeletons)
                 {
-                    _sensor.SkeletonStream.AppChoosesSkeletons = true;
+                    _sensor.SkeletonStream.AppChoosesSkeletons = true; // Make sure to let the app choose the skeleton to track by setting this to true
                 }
 
-                float closestDistance = 10000f;
+                float closestDistance = 10000f; // Large starting distance
                 int closestID = 0;
 
                 foreach (Skeleton skeleton in _skeletonData.Where(s => s.TrackingState != SkeletonTrackingState.NotTracked))
                 {
+                    // Find the skeleton that is closest to the Kinect sensor using the Z coordinate
                     if (skeleton.Position.Z < closestDistance) 
                     {
+                        // Save the skeleton's tracking ID and distance from the Kinect sensor
                         closestID = skeleton.TrackingId;
                         closestDistance = skeleton.Position.Z;
                     }
@@ -144,6 +144,7 @@ namespace KinectHandTracking
                 if (closestID > 0)
                 {
                     _sensor.SkeletonStream.ChooseSkeletons(closestID);
+                    // Get the tracked skeleton using its tracking ID
                     Skeleton[] result = _skeletonData.Where(s => s.TrackingId == closestID).ToArray();
 
                     if (result.Length > 0)
@@ -152,150 +153,24 @@ namespace KinectHandTracking
                         Joint rightHand = trackedSkeleton.Joints[JointType.HandRight];
                         Joint rightShoulder = trackedSkeleton.Joints[JointType.ShoulderRight];
 
-                        canvas.DrawTrackedHands(rightHand, _sensor.CoordinateMapper);
+                        // Uncomment this to use a marker to track the right hand
+                        // canvas.DrawTrackedHands(rightHand, _sensor.CoordinateMapper);
+
                         canvas.DrawAntsAlongArms(trackedSkeleton, _sensor.CoordinateMapper);
                     }
                 }
             }
 
-            /*
-            foreach (Skeleton skeleton in _skeletonData)
-            {
-                if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
-                {
-                    Joint rightHand = skeleton.Joints[JointType.HandRight];
-                    Joint rightShoulder = skeleton.Joints[JointType.ShoulderRight];
-                    //Joint leftHand = skeleton.Joints[JointType.HandLeft];
-                    
-
-                    canvas.DrawTrackedHands(rightHand, _sensor.CoordinateMapper);
-                    //canvas.DrawTrackedHands(leftHand, _sensor.CoordinateMapper);
-                    canvas.DrawAntsAlongArms(skeleton, _sensor.CoordinateMapper);
-
-                }
-                else if (skeleton.TrackingState == SkeletonTrackingState.PositionOnly)
-                {
-                    
-                }
-            }
-            */
         }
 
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            /*
-            if (_reader != null)
-            {
-                _reader.Dispose();
-            }
-
             if (_sensor != null)
             {
-                _sensor.Close();
-            }
-            */
-        }
-
-        /*
-        void Reader_MultiSourceFrameArrived(object sender, MultiSourceFrameArrivedEventArgs e)
-        {
-            var reference = e.FrameReference.AcquireFrame();
-
-            // Color
-            using (var frame = reference.ColorFrameReference.AcquireFrame())
-            {
-                if (frame != null)
-                {
-                    camera.Source = frame.ToBitmap();
-                }
-            }
-
-            // Body
-            using (var frame = reference.BodyFrameReference.AcquireFrame())
-            {
-                if (frame != null)
-                {
-                    canvas.Children.Clear();
-
-                    _bodies = new Body[frame.BodyFrameSource.BodyCount];
-
-                    frame.GetAndRefreshBodyData(_bodies);
-
-                    foreach (var body in _bodies)
-                    {
-                        if (body != null)
-                        {
-                            if (body.IsTracked)
-                            {
-                                // Find the joints
-                                Joint handRight = body.Joints[JointType.HandRight];
-                                // Joint thumbRight = body.Joints[JointType.ThumbRight];
-
-                                Joint handLeft = body.Joints[JointType.HandLeft];
-                                // Joint thumbLeft = body.Joints[JointType.ThumbLeft];
-
-                                // Draw hands and thumbs
-                                canvas.DrawHand(handRight, _sensor.CoordinateMapper);
-                                canvas.DrawHand(handLeft, _sensor.CoordinateMapper);
-                                // canvas.DrawThumb(thumbRight, _sensor.CoordinateMapper);
-                                // canvas.DrawThumb(thumbLeft, _sensor.CoordinateMapper);
-
-                                // Find the hand states
-                                string rightHandState = "-";
-                                string leftHandState = "-";
-
-                                switch (body.HandRightState)
-                                {
-                                    case HandState.Open:
-                                        rightHandState = "Open";
-                                        break;
-                                    case HandState.Closed:
-                                        rightHandState = "Closed";
-                                        break;
-                                    case HandState.Lasso:
-                                        rightHandState = "Lasso";
-                                        break;
-                                    case HandState.Unknown:
-                                        rightHandState = "Unknown...";
-                                        break;
-                                    case HandState.NotTracked:
-                                        rightHandState = "Not tracked";
-                                        break;
-                                    default:
-                                        break;
-                                }
-
-                                switch (body.HandLeftState)
-                                {
-                                    case HandState.Open:
-                                        leftHandState = "Open";
-                                        break;
-                                    case HandState.Closed:
-                                        leftHandState = "Closed";
-                                        break;
-                                    case HandState.Lasso:
-                                        leftHandState = "Lasso";
-                                        break;
-                                    case HandState.Unknown:
-                                        leftHandState = "Unknown...";
-                                        break;
-                                    case HandState.NotTracked:
-                                        leftHandState = "Not tracked";
-                                        break;
-                                    default:
-                                        break;
-                                }
-
-                                tblRightHandState.Text = rightHandState;
-                                tblLeftHandState.Text = leftHandState;
-                            }
-                        }
-                    }
-                }
+                _sensor.Stop();
             }
         }
-        */
 
         #endregion
     }

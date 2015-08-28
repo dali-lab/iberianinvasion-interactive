@@ -13,7 +13,7 @@ MainWindow.xaml.cs contains functions that set up the Kinect color stream and pr
 
 MainWindow.xaml contains the XML mark up for the window displaying the Kinect color stream video playback.
 
-**See comments in the code that provide brief descriptions of how functions work and their inputs/outputs
+**See comments in the code that provide brief descriptions of how functions work
 
 Useful Resources
 Skeleton tracking: https://msdn.microsoft.com/en-us/library/JJ131025.aspx
